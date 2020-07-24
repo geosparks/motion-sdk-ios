@@ -8,7 +8,6 @@ Pod::Spec.new do |spec|
   spec.source                 = { :git => 'https://github.com/geosparks/motion-sdk-ios.git', :tag => spec.version.to_s }
   spec.ios.deployment_target  = '10.0'
   spec.source_files           = 'MotionSDK/**/*.{h,m,swift}'
-  spec.resources              = 'MotionSDK/**/*.xcdatamodeld','MotionSDK/**/*.entitlements', 'MotionSDK/**/*.p12'
   spec.frameworks             = 'CoreLocation'
   spec.license                = { :type => 'Copyright', :text => 'Copyright (c) 2020 Motion. All rights reserved.' }
   spec.dependency 'AWSIoT'
