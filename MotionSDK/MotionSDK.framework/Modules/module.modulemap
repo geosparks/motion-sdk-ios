@@ -1,0 +1,4 @@
+framework module MotionSDK {
+  header "MotionSDK-Swift.h"
+  requires objc
+}

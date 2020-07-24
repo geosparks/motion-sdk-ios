@@ -1,0 +1,523 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name MotionSDK
+import AWSCore
+import AWSIoT
+import AWSMobileClient
+import CoreData
+import CoreLocation
+import CoreMotion
+import CoreTelephony
+import Foundation
+import Swift
+import SystemConfiguration
+import UIKit
+public typealias MotionUserCompletionhandler = ((MotionSDK.MotionUser?, Swift.String?) -> Swift.Void)?
+public typealias MotionLogoutCompletionhandler = ((Swift.String?) -> Swift.Void)?
+public typealias MotionCurrentLocationCompletionhandler = ((CoreLocation.CLLocation?, Swift.String?) -> Swift.Void)?
+public typealias MotionTripCompletionhandler = ((Swift.String?) -> Swift.Void)?
+public typealias MotionActiveTripsCompletionhandler = (([MotionSDK.MotionTrip]?, Swift.String?) -> Swift.Void)?
+@objc @_inheritsConvenienceInitializers public class MotionTrackingCustomMethods : ObjectiveC.NSObject {
+  public static var sharedInstance: MotionSDK.MotionTrackingCustomMethods
+  public var desiredAccuracy: CoreLocation.CLLocationAccuracy
+  public var useVisits: Swift.Bool
+  public var showBlueBar: Swift.Bool
+  public var distanceFilter: CoreLocation.CLLocationDistance
+  public var useSignificant: Swift.Bool
+  public var useRegionMonitoring: Swift.Bool
+  public var useDynamicGeofencRadius: Swift.Bool
+  public var geofenceRadius: Swift.Int
+  public var allowBackgroundLocationUpdates: Swift.Bool
+  public var activityType: CoreLocation.CLActivityType
+  public var pausesLocationUpdatesAutomatically: Swift.Bool
+  public var useDistanceFilterNone: Swift.Bool
+  public var useDynamicDistanceFilter: Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class MotionTrip : ObjectiveC.NSObject {
+  @objc public var tripId: Swift.String!
+  @objc public var deleted: Swift.Bool
+  @objc public var ended: Swift.Bool
+  @objc public var started: Swift.Bool
+  @objc public var paused: Swift.Bool
+  @objc public var updatedAt: Swift.String!
+  @objc public var createdAt: Swift.String!
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers @objc public class MotionLocation : ObjectiveC.NSObject {
+  @objc final public let userId: Swift.String?
+  @objc final public let activity: Swift.String?
+  @objc final public let location: CoreLocation.CLLocation
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc public enum MotionTrackingMethods : Swift.Int {
+  case passive = 0
+  case reactive
+  case active
+  case custom
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum Trip : Swift.Int {
+  case Start
+  case Pause
+  case Resume
+  case End
+  case ForceEnd
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class Motion : ObjectiveC.NSObject {
+  @objc public static var delegate: MotionSDK.MotionDelegate! {
+    @objc get
+    @objc set(value)
+  }
+  @objc public static func intialize(_ publishKey: Swift.String, _ baseUrl: Swift.String? = nil)
+  @objc public static func createUser(_ description: Swift.String, handler: MotionSDK.MotionUserCompletionhandler)
+  @objc public static func getUser(_ userId: Swift.String, handler: MotionSDK.MotionUserCompletionhandler)
+  @objc public static func setDescription(_ description: Swift.String)
+  @objc public static func logoutUser(handler: MotionSDK.MotionLogoutCompletionhandler)
+  @objc public static func setDeviceToken(_ deviceToken: Foundation.Data)
+  @objc public static func startTracking(_ trackingMethod: MotionSDK.MotionTrackingMethods, options: MotionSDK.MotionTrackingCustomMethods? = nil)
+  @objc public static func stopTracking()
+  @objc public static func requestLocation()
+  @objc public static func requestMotion()
+  @objc public static func isLocationEnabled() -> Swift.Bool
+  @objc public static func isMotionEnabled() -> Swift.Bool
+  @objc public static func isLocationTracking() -> Swift.Bool
+  @objc public static func locationPermissionStatus() -> Swift.Int
+  @objc public static func getCurrentLocation(_ accuracy: Swift.Int, handler: MotionSDK.MotionCurrentLocationCompletionhandler)
+  @objc public static func updateCurrentLocation(_ accuracy: Swift.Int)
+  @objc public static func trip(_ type: MotionSDK.Trip, _ tripId: Swift.String, _ tripDesc: Swift.String? = nil, handler: MotionSDK.MotionTripCompletionhandler)
+  @objc public static func activeTrips(handler: MotionSDK.MotionActiveTripsCompletionhandler)
+  @objc public static func toggleEvents(Geofence: Swift.Bool, Trip: Swift.Bool, Location: Swift.Bool, MovingGeofence: Swift.Bool, handler: MotionSDK.MotionUserCompletionhandler)
+  @objc public static func toggleListener(Events: Swift.Bool, Locations: Swift.Bool, handler: MotionSDK.MotionUserCompletionhandler)
+  @objc public static func getEventsStatus(handler: MotionSDK.MotionUserCompletionhandler)
+  @objc public static func getListenerStatus(handler: MotionSDK.MotionUserCompletionhandler)
+  @objc public static func notificationOpenedHandler(_ resposne: UserNotifications.UNNotificationResponse)
+  @objc public static func setLoggerEnabled(logger: Swift.Bool)
+  @objc public static func getLogFile() -> Foundation.URL
+  @objc public static func subscribeEvents()
+  @objc public static func unsubscribeEvents()
+  @objc public static func subscribeLocation()
+  @objc public static func unsubscribeLocation()
+  @objc public static func subscribeUserLocation(_ userId: Swift.String)
+  @objc public static func unsubscribeUserLocation(_ userId: Swift.String)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers @objc public class MotionUser : ObjectiveC.NSObject {
+  @objc final public let userId: Swift.String
+  @objc final public let userDescription: Swift.String?
+  @objc public var geofenceEvents: Swift.Bool
+  @objc public var eventsListener: Swift.Bool
+  @objc public var locationListener: Swift.Bool
+  @objc public var motionEvents: Swift.Bool
+  @objc public var tripsEvents: Swift.Bool
+  @objc public var nearbyEvents: Swift.Bool
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc public protocol MotionDelegate {
+  @objc func didUpdateLocation(_ location: MotionSDK.MotionLocation)
+  @objc func didReceiveEvents(_ dictionary: Swift.Dictionary<Swift.String, Any>)
+  @objc func didReceiveUserLocation(_ dictionary: Swift.Dictionary<Swift.String, Any>)
+}
+public enum ReachabilityError : Swift.Error {
+  case failedToCreateWithAddress(Darwin.sockaddr, Swift.Int32)
+  case failedToCreateWithHostname(Swift.String, Swift.Int32)
+  case unableToSetCallback(Swift.Int32)
+  case unableToSetDispatchQueue(Swift.Int32)
+  case unableToGetFlags(Swift.Int32)
+}
+@available(*, unavailable, renamed: "Notification.Name.reachabilityChanged")
+public var ReachabilityChangedNotification: Foundation.NSNotification.Name
+extension NSNotification.Name {
+  public static var reachabilityChanged: Foundation.Notification.Name
+}
+public class Reachability {
+  public typealias NetworkReachable = (MotionSDK.Reachability) -> ()
+  public typealias NetworkUnreachable = (MotionSDK.Reachability) -> ()
+  @available(*, unavailable, renamed: "Connection")
+  public enum NetworkStatus : Swift.CustomStringConvertible {
+    case notReachable
+    case reachableViaWiFi
+    case reachableViaWWAN
+    public var description: Swift.String {
+      get
+    }
+    public static func == (a: MotionSDK.Reachability.NetworkStatus, b: MotionSDK.Reachability.NetworkStatus) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  public enum Connection : Swift.CustomStringConvertible {
+    @available(*, deprecated, renamed: "unavailable")
+    case none
+    case unavailable
+    case wifi
+    case cellular
+    public var description: Swift.String {
+      get
+    }
+    public static func == (a: MotionSDK.Reachability.Connection, b: MotionSDK.Reachability.Connection) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  public var whenReachable: MotionSDK.Reachability.NetworkReachable?
+  public var whenUnreachable: MotionSDK.Reachability.NetworkUnreachable?
+  @available(*, deprecated, renamed: "allowsCellularConnection")
+  final public let reachableOnWWAN: Swift.Bool
+  public var allowsCellularConnection: Swift.Bool
+  public var notificationCenter: Foundation.NotificationCenter
+  @available(*, deprecated, renamed: "connection.description")
+  public var currentReachabilityString: Swift.String {
+    get
+  }
+  @available(*, unavailable, renamed: "connection")
+  public var currentReachabilityStatus: MotionSDK.Reachability.Connection {
+    get
+  }
+  public var connection: MotionSDK.Reachability.Connection {
+    get
+  }
+  required public init(reachabilityRef: SystemConfiguration.SCNetworkReachability, queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main)
+  public convenience init(hostname: Swift.String, queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main) throws
+  public convenience init(queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main) throws
+  @objc deinit
+}
+extension Reachability {
+  public func startNotifier() throws
+  public func stopNotifier()
+  @available(*, deprecated, message: "Please use `connection != .none`")
+  public var isReachable: Swift.Bool {
+    get
+  }
+  @available(*, deprecated, message: "Please use `connection == .cellular`")
+  public var isReachableViaWWAN: Swift.Bool {
+    get
+  }
+  @available(*, deprecated, message: "Please use `connection == .wifi`")
+  public var isReachableViaWiFi: Swift.Bool {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc(HttpLocationData) public class HttpLocationData : CoreData.NSManagedObject {
+  @objc deinit
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+}
+extension HttpLocationData {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.HttpLocationData>
+  @objc @NSManaged dynamic public var accuracy: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var activity: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var altitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var app_stat: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var bat_saver_mode: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var bat_stat: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var battery_remaining: Swift.Int16 {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var ended_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var gps_stat: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var latitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_permission: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var longitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var motion_stat: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var net_stat: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var recorded_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var speed: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var started_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var timezone_offset: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var user_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+}
+@_inheritsConvenienceInitializers @objc(Location) public class Location : CoreData.NSManagedObject {
+  @objc deinit
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+}
+extension Location {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.Location>
+  @objc @NSManaged dynamic public var latitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var longitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var timestamp: Foundation.Date? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var run: MotionSDK.Run? {
+    @objc get
+    @objc set(value)
+  }
+}
+@_inheritsConvenienceInitializers @objc(MqttLocationData) public class MqttLocationData : CoreData.NSManagedObject {
+  @objc deinit
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+}
+extension MqttLocationData {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.MqttLocationData>
+  @objc @NSManaged dynamic public var accuracy: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var activity: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var activity_stat: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var altitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var app_context: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var app_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var app_stat: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var bat_saver_mode: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var bat_stat: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var battery_remaining: Swift.Int16 {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var carrier_name: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var course: Foundation.NSDecimalNumber? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var device_manufacturer: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var device_model: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var event_listener: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var geofence_events: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var gps_stat: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var horizontal_accuracy: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var is_charging: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var latitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_events: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_listener: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_method: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_permission: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var longitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var motion_events: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var motion_stat: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var nearby_events: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var net_stat: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var os_version: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var recorded_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var speed: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var timezone_offset: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var tracking_options: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var trips_events: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var user_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var utc_timestamp: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var vertical_accuracy: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+}
+@_inheritsConvenienceInitializers @objc(Run) public class Run : CoreData.NSManagedObject {
+  @objc deinit
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+}
+extension Run {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.Run>
+  @objc @NSManaged dynamic public var distance: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var duration: Swift.Int16 {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var timestamp: Foundation.Date? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location: Foundation.NSOrderedSet? {
+    @objc get
+    @objc set(value)
+  }
+}
+extension Run {
+  @objc(insertObject:inLocationAtIndex:) @NSManaged dynamic public func insertIntoLocation(_ value: MotionSDK.Location, at idx: Swift.Int)
+  @objc(removeObjectFromLocationAtIndex:) @NSManaged dynamic public func removeFromLocation(at idx: Swift.Int)
+  @objc(insertLocation:atIndexes:) @NSManaged dynamic public func insertIntoLocation(_ values: [MotionSDK.Location], at indexes: Foundation.NSIndexSet)
+  @objc(removeLocationAtIndexes:) @NSManaged dynamic public func removeFromLocation(at indexes: Foundation.NSIndexSet)
+  @objc(replaceObjectInLocationAtIndex:withObject:) @NSManaged dynamic public func replaceLocation(at idx: Swift.Int, with value: MotionSDK.Location)
+  @objc(replaceLocationAtIndexes:withLocation:) @NSManaged dynamic public func replaceLocation(at indexes: Foundation.NSIndexSet, with values: [MotionSDK.Location])
+  @objc(addLocationObject:) @NSManaged dynamic public func addToLocation(_ value: MotionSDK.Location)
+  @objc(removeLocationObject:) @NSManaged dynamic public func removeFromLocation(_ value: MotionSDK.Location)
+  @objc(addLocation:) @NSManaged dynamic public func addToLocation(_ values: Foundation.NSOrderedSet)
+  @objc(removeLocation:) @NSManaged dynamic public func removeFromLocation(_ values: Foundation.NSOrderedSet)
+}
