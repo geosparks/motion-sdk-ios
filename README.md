@@ -4,7 +4,8 @@
 
 ## Live Location SDK for iOS
 
-[Motion](https://motion.dev) is the location intelligence platform.
+[Motion](https://motion.dev) helps you build better location apps. Builidng a reliable developer community mobile location technologies. Our SDK are built combining our propietary and open source technologies to create end user products for developers.
+
 
 ## Support
 
