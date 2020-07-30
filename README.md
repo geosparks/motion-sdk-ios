@@ -2,7 +2,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/motiondotdev?label=Follow&style=social)](https://twitter.com/motiondotdev)
 [![GitHub contributors](https://img.shields.io/github/followers/motion-sdk-ios?label=Follow&style=social)](https://github.com/geosparks/motion-sdk-ios/graphs/contributors)
 
-
+## Live Location SDK for iOS
 
 [Motion](https://motion.dev) is the location intelligence platform.
 
