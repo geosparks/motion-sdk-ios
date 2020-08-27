@@ -130,20 +130,33 @@ import UserNotifications
   @objc override dynamic public init()
   @objc deinit
 }
+public enum LocationAccuracy {
+  case kCLLocationAccuracyBestForNavigation
+  case kCLLocationAccuracyBest
+  case kCLLocationAccuracyNearestTenMeters
+  case kCLLocationAccuracyHundredMeters
+  case kCLLocationAccuracyKilometer
+  case kCLLocationAccuracyThreeKilometers
+  public static func == (a: MotionSDK.LocationAccuracy, b: MotionSDK.LocationAccuracy) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
 @objc @_inheritsConvenienceInitializers public class MotionTrackingCustomMethods : ObjectiveC.NSObject {
   public static var sharedInstance: MotionSDK.MotionTrackingCustomMethods
-  public var desiredAccuracy: CoreLocation.CLLocationAccuracy
-  public var useVisits: Swift.Bool
-  public var showsBackgroundLocationIndicator: Swift.Bool
-  public var distanceFilter: CoreLocation.CLLocationDistance
-  public var useSignificant: Swift.Bool
-  public var useRegionMonitoring: Swift.Bool
-  public var useDynamicGeofencRadius: Swift.Bool
-  public var geofenceRadius: Swift.Int
-  public var allowBackgroundLocationUpdates: Swift.Bool
-  public var activityType: CoreLocation.CLActivityType
-  public var pausesLocationUpdatesAutomatically: Swift.Bool
-  public var useStandardLocationServices: Swift.Bool
+  public var desiredAccuracy: MotionSDK.LocationAccuracy?
+  public var useVisits: Swift.Bool?
+  public var showsBackgroundLocationIndicator: Swift.Bool?
+  public var distanceFilter: CoreLocation.CLLocationDistance?
+  public var useSignificant: Swift.Bool?
+  public var useRegionMonitoring: Swift.Bool?
+  public var useDynamicGeofencRadius: Swift.Bool?
+  public var geofenceRadius: Swift.Int?
+  public var allowBackgroundLocationUpdates: Swift.Bool?
+  public var activityType: CoreLocation.CLActivityType?
+  public var pausesLocationUpdatesAutomatically: Swift.Bool?
+  public var useStandardLocationServices: Swift.Bool?
   @objc override dynamic public init()
   @objc deinit
 }
