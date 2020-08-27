@@ -1,4 +1,11 @@
 framework module MotionSDK {
-  header "MotionSDK-Swift.h"
-  requires objc
+  umbrella header "MotionSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module MotionSDK.Swift {
+    header "MotionSDK-Swift.h"
+    requires objc
 }
