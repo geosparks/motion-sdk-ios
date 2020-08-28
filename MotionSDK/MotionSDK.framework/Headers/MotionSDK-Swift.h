@@ -296,6 +296,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MotionDelegate> _N
 + (void)unsubscribeLocation;
 + (void)subscribeUserLocation:(NSString * _Nonnull)userId;
 + (void)unsubscribeUserLocation:(NSString * _Nonnull)userId;
++ (void)subscribeTripStatus:(NSString * _Nonnull)tripId;
++ (void)unsubscribeTripStatus:(NSString * _Nonnull)tripId;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -319,12 +321,14 @@ SWIFT_CLASS("_TtC9MotionSDK16MotionCreateTrip")
 @end
 
 @class MotionLocation;
+@class TripStatusListener;
 
 SWIFT_PROTOCOL("_TtP9MotionSDK14MotionDelegate_")
 @protocol MotionDelegate
 - (void)didUpdateLocation:(MotionLocation * _Nonnull)location;
 - (void)didReceiveEvents:(NSDictionary<NSString *, id> * _Nonnull)dictionary;
 - (void)didReceiveUserLocation:(NSDictionary<NSString *, id> * _Nonnull)dictionary;
+- (void)didReceiveTripStatus:(TripStatusListener * _Nonnull)tripStatus;
 @end
 
 
@@ -562,6 +566,21 @@ typedef SWIFT_ENUM(NSInteger, Trip, open) {
   TripEnd = 3,
   TripForceEnd = 4,
 };
+
+
+SWIFT_CLASS("_TtC9MotionSDK18TripStatusListener")
+@interface TripStatusListener : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull tripId;
+@property (nonatomic, readonly) double speed;
+@property (nonatomic, readonly) double distance;
+@property (nonatomic, readonly) double duration;
+@property (nonatomic, readonly, copy) NSString * _Nonnull startedTime;
+@property (nonatomic, readonly) double pace;
+@property (nonatomic, readonly) double latitude;
+@property (nonatomic, readonly) double longitude;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
 
 
 
@@ -867,6 +886,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MotionDelegate> _N
 + (void)unsubscribeLocation;
 + (void)subscribeUserLocation:(NSString * _Nonnull)userId;
 + (void)unsubscribeUserLocation:(NSString * _Nonnull)userId;
++ (void)subscribeTripStatus:(NSString * _Nonnull)tripId;
++ (void)unsubscribeTripStatus:(NSString * _Nonnull)tripId;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -890,12 +911,14 @@ SWIFT_CLASS("_TtC9MotionSDK16MotionCreateTrip")
 @end
 
 @class MotionLocation;
+@class TripStatusListener;
 
 SWIFT_PROTOCOL("_TtP9MotionSDK14MotionDelegate_")
 @protocol MotionDelegate
 - (void)didUpdateLocation:(MotionLocation * _Nonnull)location;
 - (void)didReceiveEvents:(NSDictionary<NSString *, id> * _Nonnull)dictionary;
 - (void)didReceiveUserLocation:(NSDictionary<NSString *, id> * _Nonnull)dictionary;
+- (void)didReceiveTripStatus:(TripStatusListener * _Nonnull)tripStatus;
 @end
 
 
@@ -1133,6 +1156,21 @@ typedef SWIFT_ENUM(NSInteger, Trip, open) {
   TripEnd = 3,
   TripForceEnd = 4,
 };
+
+
+SWIFT_CLASS("_TtC9MotionSDK18TripStatusListener")
+@interface TripStatusListener : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull tripId;
+@property (nonatomic, readonly) double speed;
+@property (nonatomic, readonly) double distance;
+@property (nonatomic, readonly) double duration;
+@property (nonatomic, readonly, copy) NSString * _Nonnull startedTime;
+@property (nonatomic, readonly) double pace;
+@property (nonatomic, readonly) double latitude;
+@property (nonatomic, readonly) double longitude;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
 
 
 

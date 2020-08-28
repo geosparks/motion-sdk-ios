@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name                  = 'MotionSDK'
-  spec.version               = '1.0.0-alpha.6'
+  spec.version               = '1.0.0'
   spec.summary               = 'iOS SDK for Motion, the location intelligence platform'
   spec.homepage              = 'https://motion.dev'
   spec.author                = { 'Motion' => 'support@motion.dev'}
