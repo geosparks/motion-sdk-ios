@@ -2,7 +2,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/motiondotdev?label=Follow&style=social)](https://twitter.com/motiondotdev)
 [![GitHub contributors](https://img.shields.io/github/followers/motion-sdk-ios?label=Follow&style=social)](https://github.com/geosparks/motion-sdk-ios/graphs/contributors)
 
-## Live Location SDK for iOS
+## Location SDK - iOS by Motion.Dev
 
 [Motion.Dev](https://motion.dev) helps you build better location apps. Builidng the developer community for location technologies. Our SDKs are built combining our propietary and open source technologies to create end user products for developers.
 
