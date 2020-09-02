@@ -279,8 +279,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MotionDelegate> _N
 + (void)pauseTrip:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(NSString * _Nullable, MotionError * _Nullable))handler;
 + (void)resumeTrip:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(NSString * _Nullable, MotionError * _Nullable))handler;
 + (void)forceEndTrip:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(NSString * _Nullable, MotionError * _Nullable))handler;
-+ (void)activeTripsWithHandler:(void (^ _Nullable)(NSArray<MotionTrip *> * _Nullable, MotionError * _Nullable))handler;
-+ (void)createTripWithCoordinate:(NSDictionary<NSString *, id> * _Nullable)coordinate handler:(void (^ _Nullable)(MotionCreateTrip * _Nullable, MotionError * _Nullable))handler;
++ (void)activeTrips:(BOOL)local handler:(void (^ _Nullable)(NSArray<MotionTrip *> * _Nullable, MotionError * _Nullable))handler;
++ (void)createTrip:(BOOL)local :(NSDictionary<NSString *, id> * _Nullable)coordinate handler:(void (^ _Nullable)(MotionCreateTrip * _Nullable, MotionError * _Nullable))handler;
 + (void)getTripDetails:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(MotionGetTrip * _Nullable, MotionError * _Nullable))handler;
 + (void)getTripSummary:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(MotionTripSummary * _Nullable, MotionError * _Nullable))handler;
 + (void)getTripStatus:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(MotionTripListener * _Nullable, MotionError * _Nullable))handler;
@@ -434,7 +434,7 @@ SWIFT_CLASS("_TtC9MotionSDK15MotionTripEvent")
 SWIFT_CLASS("_TtC9MotionSDK18MotionTripListener")
 @interface MotionTripListener : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull tripId;
-@property (nonatomic, readonly) int16_t speed;
+@property (nonatomic, readonly) double speed;
 @property (nonatomic, readonly) double distance;
 @property (nonatomic, readonly) double duration;
 @property (nonatomic, readonly, copy) NSString * _Nonnull startedTime;
@@ -543,6 +543,16 @@ SWIFT_CLASS_NAMED("MyTrip")
 - (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class MyTripRoute;
+@class NSSet;
+
+@interface MyTrip (SWIFT_EXTENSION(MotionSDK))
+- (void)addRouteObject:(MyTripRoute * _Nonnull)value;
+- (void)removeRouteObject:(MyTripRoute * _Nonnull)value;
+- (void)addRoute:(NSSet * _Nonnull)values;
+- (void)removeRoute:(NSSet * _Nonnull)values;
+@end
+
 
 @interface MyTrip (SWIFT_EXTENSION(MotionSDK))
 @property (nonatomic) double distance;
@@ -555,6 +565,25 @@ SWIFT_CLASS_NAMED("MyTrip")
 @property (nonatomic, copy) NSString * _Nullable status;
 @property (nonatomic, copy) NSString * _Nullable tripId;
 @property (nonatomic, copy) NSString * _Nullable update_time;
+@property (nonatomic, strong) NSSet * _Nullable route;
+@end
+
+
+SWIFT_CLASS_NAMED("MyTripRoute")
+@interface MyTripRoute : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface MyTripRoute (SWIFT_EXTENSION(MotionSDK))
+@property (nonatomic, copy) NSString * _Nullable activity;
+@property (nonatomic) double altitude;
+@property (nonatomic, copy) NSString * _Nullable entityId;
+@property (nonatomic) double latitude;
+@property (nonatomic) double longitude;
+@property (nonatomic, copy) NSString * _Nullable recorded_at;
+@property (nonatomic, copy) NSString * _Nullable tripId;
+@property (nonatomic, strong) MyTrip * _Nullable trip;
 @end
 
 
@@ -565,7 +594,28 @@ typedef SWIFT_ENUM(NSInteger, Trip, open) {
   TripResume = 2,
   TripEnd = 3,
   TripForceEnd = 4,
+  TripDelete = 5,
 };
+
+
+SWIFT_CLASS_NAMED("TripEventsLocal")
+@interface TripEventsLocal : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class TripsLocal;
+
+@interface TripEventsLocal (SWIFT_EXTENSION(MotionSDK))
+@property (nonatomic, copy) NSString * _Nullable created_at;
+@property (nonatomic, copy) NSString * _Nullable entityId;
+@property (nonatomic, copy) NSString * _Nullable event_source;
+@property (nonatomic, copy) NSString * _Nullable event_type;
+@property (nonatomic, copy) NSString * _Nullable event_version;
+@property (nonatomic, copy) NSString * _Nullable location_id;
+@property (nonatomic, copy) NSString * _Nullable trip_id;
+@property (nonatomic, copy) NSString * _Nullable user_id;
+@property (nonatomic, strong) TripsLocal * _Nullable trip;
+@end
 
 
 SWIFT_CLASS("_TtC9MotionSDK18TripStatusListener")
@@ -580,6 +630,38 @@ SWIFT_CLASS("_TtC9MotionSDK18TripStatusListener")
 @property (nonatomic, readonly) double longitude;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS_NAMED("TripsLocal")
+@interface TripsLocal : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface TripsLocal (SWIFT_EXTENSION(MotionSDK))
+- (void)addEventsObject:(TripEventsLocal * _Nonnull)value;
+- (void)removeEventsObject:(TripEventsLocal * _Nonnull)value;
+- (void)addEvents:(NSSet * _Nonnull)values;
+- (void)removeEvents:(NSSet * _Nonnull)values;
+@end
+
+
+@interface TripsLocal (SWIFT_EXTENSION(MotionSDK))
+@property (nonatomic, copy) NSString * _Nullable created_at;
+@property (nonatomic) double distance_covered;
+@property (nonatomic) double duration;
+@property (nonatomic) BOOL is_deleted;
+@property (nonatomic) BOOL is_ended;
+@property (nonatomic) BOOL is_paused;
+@property (nonatomic) BOOL is_started;
+@property (nonatomic, copy) NSString * _Nullable location_id;
+@property (nonatomic, copy) NSString * _Nullable trip_ended_at;
+@property (nonatomic, copy) NSString * _Nullable trip_id;
+@property (nonatomic, copy) NSString * _Nullable trip_started_at;
+@property (nonatomic, copy) NSString * _Nullable updated_at;
+@property (nonatomic, copy) NSString * _Nullable user_id;
+@property (nonatomic, strong) NSSet * _Nullable events;
 @end
 
 
@@ -869,8 +951,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MotionDelegate> _N
 + (void)pauseTrip:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(NSString * _Nullable, MotionError * _Nullable))handler;
 + (void)resumeTrip:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(NSString * _Nullable, MotionError * _Nullable))handler;
 + (void)forceEndTrip:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(NSString * _Nullable, MotionError * _Nullable))handler;
-+ (void)activeTripsWithHandler:(void (^ _Nullable)(NSArray<MotionTrip *> * _Nullable, MotionError * _Nullable))handler;
-+ (void)createTripWithCoordinate:(NSDictionary<NSString *, id> * _Nullable)coordinate handler:(void (^ _Nullable)(MotionCreateTrip * _Nullable, MotionError * _Nullable))handler;
++ (void)activeTrips:(BOOL)local handler:(void (^ _Nullable)(NSArray<MotionTrip *> * _Nullable, MotionError * _Nullable))handler;
++ (void)createTrip:(BOOL)local :(NSDictionary<NSString *, id> * _Nullable)coordinate handler:(void (^ _Nullable)(MotionCreateTrip * _Nullable, MotionError * _Nullable))handler;
 + (void)getTripDetails:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(MotionGetTrip * _Nullable, MotionError * _Nullable))handler;
 + (void)getTripSummary:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(MotionTripSummary * _Nullable, MotionError * _Nullable))handler;
 + (void)getTripStatus:(NSString * _Nonnull)tripId handler:(void (^ _Nullable)(MotionTripListener * _Nullable, MotionError * _Nullable))handler;
@@ -1024,7 +1106,7 @@ SWIFT_CLASS("_TtC9MotionSDK15MotionTripEvent")
 SWIFT_CLASS("_TtC9MotionSDK18MotionTripListener")
 @interface MotionTripListener : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull tripId;
-@property (nonatomic, readonly) int16_t speed;
+@property (nonatomic, readonly) double speed;
 @property (nonatomic, readonly) double distance;
 @property (nonatomic, readonly) double duration;
 @property (nonatomic, readonly, copy) NSString * _Nonnull startedTime;
@@ -1133,6 +1215,16 @@ SWIFT_CLASS_NAMED("MyTrip")
 - (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class MyTripRoute;
+@class NSSet;
+
+@interface MyTrip (SWIFT_EXTENSION(MotionSDK))
+- (void)addRouteObject:(MyTripRoute * _Nonnull)value;
+- (void)removeRouteObject:(MyTripRoute * _Nonnull)value;
+- (void)addRoute:(NSSet * _Nonnull)values;
+- (void)removeRoute:(NSSet * _Nonnull)values;
+@end
+
 
 @interface MyTrip (SWIFT_EXTENSION(MotionSDK))
 @property (nonatomic) double distance;
@@ -1145,6 +1237,25 @@ SWIFT_CLASS_NAMED("MyTrip")
 @property (nonatomic, copy) NSString * _Nullable status;
 @property (nonatomic, copy) NSString * _Nullable tripId;
 @property (nonatomic, copy) NSString * _Nullable update_time;
+@property (nonatomic, strong) NSSet * _Nullable route;
+@end
+
+
+SWIFT_CLASS_NAMED("MyTripRoute")
+@interface MyTripRoute : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface MyTripRoute (SWIFT_EXTENSION(MotionSDK))
+@property (nonatomic, copy) NSString * _Nullable activity;
+@property (nonatomic) double altitude;
+@property (nonatomic, copy) NSString * _Nullable entityId;
+@property (nonatomic) double latitude;
+@property (nonatomic) double longitude;
+@property (nonatomic, copy) NSString * _Nullable recorded_at;
+@property (nonatomic, copy) NSString * _Nullable tripId;
+@property (nonatomic, strong) MyTrip * _Nullable trip;
 @end
 
 
@@ -1155,7 +1266,28 @@ typedef SWIFT_ENUM(NSInteger, Trip, open) {
   TripResume = 2,
   TripEnd = 3,
   TripForceEnd = 4,
+  TripDelete = 5,
 };
+
+
+SWIFT_CLASS_NAMED("TripEventsLocal")
+@interface TripEventsLocal : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class TripsLocal;
+
+@interface TripEventsLocal (SWIFT_EXTENSION(MotionSDK))
+@property (nonatomic, copy) NSString * _Nullable created_at;
+@property (nonatomic, copy) NSString * _Nullable entityId;
+@property (nonatomic, copy) NSString * _Nullable event_source;
+@property (nonatomic, copy) NSString * _Nullable event_type;
+@property (nonatomic, copy) NSString * _Nullable event_version;
+@property (nonatomic, copy) NSString * _Nullable location_id;
+@property (nonatomic, copy) NSString * _Nullable trip_id;
+@property (nonatomic, copy) NSString * _Nullable user_id;
+@property (nonatomic, strong) TripsLocal * _Nullable trip;
+@end
 
 
 SWIFT_CLASS("_TtC9MotionSDK18TripStatusListener")
@@ -1170,6 +1302,38 @@ SWIFT_CLASS("_TtC9MotionSDK18TripStatusListener")
 @property (nonatomic, readonly) double longitude;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS_NAMED("TripsLocal")
+@interface TripsLocal : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface TripsLocal (SWIFT_EXTENSION(MotionSDK))
+- (void)addEventsObject:(TripEventsLocal * _Nonnull)value;
+- (void)removeEventsObject:(TripEventsLocal * _Nonnull)value;
+- (void)addEvents:(NSSet * _Nonnull)values;
+- (void)removeEvents:(NSSet * _Nonnull)values;
+@end
+
+
+@interface TripsLocal (SWIFT_EXTENSION(MotionSDK))
+@property (nonatomic, copy) NSString * _Nullable created_at;
+@property (nonatomic) double distance_covered;
+@property (nonatomic) double duration;
+@property (nonatomic) BOOL is_deleted;
+@property (nonatomic) BOOL is_ended;
+@property (nonatomic) BOOL is_paused;
+@property (nonatomic) BOOL is_started;
+@property (nonatomic, copy) NSString * _Nullable location_id;
+@property (nonatomic, copy) NSString * _Nullable trip_ended_at;
+@property (nonatomic, copy) NSString * _Nullable trip_id;
+@property (nonatomic, copy) NSString * _Nullable trip_started_at;
+@property (nonatomic, copy) NSString * _Nullable updated_at;
+@property (nonatomic, copy) NSString * _Nullable user_id;
+@property (nonatomic, strong) NSSet * _Nullable events;
 @end
 
 

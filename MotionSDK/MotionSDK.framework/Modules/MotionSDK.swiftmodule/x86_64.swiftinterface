@@ -47,8 +47,8 @@ import UserNotifications
   @objc public var tripId: Swift.String!
   @objc public var userId: Swift.String!
   @objc public var userLocationId: Swift.String!
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class MotionUser : ObjectiveC.NSObject {
   @objc final public let userId: Swift.String
@@ -94,8 +94,8 @@ import UserNotifications
   @objc public static func pauseTrip(_ tripId: Swift.String, handler: MotionSDK.MotionTripCompletionhandler)
   @objc public static func resumeTrip(_ tripId: Swift.String, handler: MotionSDK.MotionTripCompletionhandler)
   @objc public static func forceEndTrip(_ tripId: Swift.String, handler: MotionSDK.MotionTripCompletionhandler)
-  @objc public static func activeTrips(handler: MotionSDK.MotionActiveTripsCompletionhandler)
-  @objc public static func createTrip(coordinate: Swift.Dictionary<Swift.String, Any>? = nil, handler: MotionSDK.MotionCreateTripCompletionhandler)
+  @objc public static func activeTrips(_ local: Swift.Bool, handler: MotionSDK.MotionActiveTripsCompletionhandler)
+  @objc public static func createTrip(_ local: Swift.Bool, _ coordinate: Swift.Dictionary<Swift.String, Any>? = nil, handler: MotionSDK.MotionCreateTripCompletionhandler)
   @objc public static func getTripDetails(_ tripId: Swift.String, handler: MotionSDK.MotionGetTripCompletionhandler)
   @objc public static func getTripSummary(_ tripId: Swift.String, handler: MotionSDK.MotionSummaryTripCompletionhandler)
   @objc public static func getTripStatus(_ tripId: Swift.String, handler: MotionSDK.MotionTripListenerCompletionhandler)
@@ -189,6 +189,18 @@ public enum LocationAccuracy {
   @objc final public let userId: Swift.String?
   @objc final public let activity: Swift.String?
   @objc final public let location: CoreLocation.CLLocation
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers @objc public class TripStatusListener : ObjectiveC.NSObject {
+  @objc final public let tripId: Swift.String
+  @objc final public let speed: Swift.Double
+  @objc final public let distance: Swift.Double
+  @objc final public let duration: Swift.Double
+  @objc final public let startedTime: Swift.String
+  @objc final public let pace: Swift.Double
+  @objc final public let latitude: Swift.Double
+  @objc final public let longitude: Swift.Double
   @objc deinit
   @objc override dynamic public init()
 }
@@ -294,6 +306,7 @@ extension Reachability {
   case Resume
   case End
   case ForceEnd
+  case Delete
   public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
   public var rawValue: Swift.Int {
@@ -305,18 +318,6 @@ extension Reachability {
   @objc public var altitude: Foundation.NSNumber!
   @objc public var coordinates: [Swift.Double]!
   @objc public var recordedAt: Swift.String!
-  @objc deinit
-  @objc override dynamic public init()
-}
-@_hasMissingDesignatedInitializers @objc public class TripStatusListener : ObjectiveC.NSObject {
-  @objc final public let tripId: Swift.String
-  @objc final public let speed: Swift.Double
-  @objc final public let distance: Swift.Double
-  @objc final public let duration: Swift.Double
-  @objc final public let startedTime: Swift.String
-  @objc final public let pace: Swift.Double
-  @objc final public let latitude: Swift.Double
-  @objc final public let longitude: Swift.Double
   @objc deinit
   @objc override dynamic public init()
 }
@@ -342,7 +343,7 @@ extension Reachability {
 }
 @_hasMissingDesignatedInitializers @objc public class MotionTripListener : ObjectiveC.NSObject {
   @objc final public let tripId: Swift.String
-  @objc final public let speed: Swift.Int16
+  @objc final public let speed: Swift.Double
   @objc final public let distance: Swift.Double
   @objc final public let duration: Swift.Double
   @objc final public let startedTime: Swift.String
@@ -358,6 +359,7 @@ public typealias MotionCreateTripCompletionhandler = ((MotionSDK.MotionCreateTri
 public typealias MotionGetTripCompletionhandler = ((MotionSDK.MotionGetTrip?, MotionSDK.MotionError?) -> Swift.Void)?
 public typealias MotionSummaryTripCompletionhandler = ((MotionSDK.MotionTripSummary?, MotionSDK.MotionError?) -> Swift.Void)?
 public typealias MotionTripListenerCompletionhandler = ((MotionSDK.MotionTripListener?, MotionSDK.MotionError?) -> Swift.Void)?
+public typealias MotionDeleteTripCompletionhandler = ((Swift.String?, MotionSDK.MotionError?) -> Swift.Void)?
 @_inheritsConvenienceInitializers @objc(HttpLocationData) public class HttpLocationData : CoreData.NSManagedObject {
   @objc deinit
   @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
@@ -614,4 +616,165 @@ extension MyTrip {
     @objc get
     @objc set(value)
   }
+  @objc @NSManaged dynamic public var route: Foundation.NSSet? {
+    @objc get
+    @objc set(value)
+  }
+}
+extension MyTrip {
+  @objc(addRouteObject:) @NSManaged dynamic public func addToRoute(_ value: MotionSDK.MyTripRoute)
+  @objc(removeRouteObject:) @NSManaged dynamic public func removeFromRoute(_ value: MotionSDK.MyTripRoute)
+  @objc(addRoute:) @NSManaged dynamic public func addToRoute(_ values: Foundation.NSSet)
+  @objc(removeRoute:) @NSManaged dynamic public func removeFromRoute(_ values: Foundation.NSSet)
+}
+@_inheritsConvenienceInitializers @objc(MyTripRoute) public class MyTripRoute : CoreData.NSManagedObject {
+  @objc deinit
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+}
+extension MyTripRoute {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.MyTripRoute>
+  @objc @NSManaged dynamic public var activity: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var altitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var entityId: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var latitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var longitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var recorded_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var tripId: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var trip: MotionSDK.MyTrip? {
+    @objc get
+    @objc set(value)
+  }
+}
+@_inheritsConvenienceInitializers @objc(TripEventsLocal) public class TripEventsLocal : CoreData.NSManagedObject {
+  @objc deinit
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+}
+extension TripEventsLocal {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.TripEventsLocal>
+  @objc @NSManaged dynamic public var created_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var entityId: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var event_source: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var event_type: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var event_version: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var trip_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var user_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var trip: MotionSDK.TripsLocal? {
+    @objc get
+    @objc set(value)
+  }
+}
+@_inheritsConvenienceInitializers @objc(TripsLocal) public class TripsLocal : CoreData.NSManagedObject {
+  @objc deinit
+  @objc override dynamic public init(entity: CoreData.NSEntityDescription, insertInto context: CoreData.NSManagedObjectContext?)
+}
+extension TripsLocal {
+  @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.TripsLocal>
+  @objc @NSManaged dynamic public var created_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var distance_covered: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var duration: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var is_deleted: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var is_ended: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var is_paused: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var is_started: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var trip_ended_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var trip_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var trip_started_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var updated_at: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var user_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var events: Foundation.NSSet? {
+    @objc get
+    @objc set(value)
+  }
+}
+extension TripsLocal {
+  @objc(addEventsObject:) @NSManaged dynamic public func addToEvents(_ value: MotionSDK.TripEventsLocal)
+  @objc(removeEventsObject:) @NSManaged dynamic public func removeFromEvents(_ value: MotionSDK.TripEventsLocal)
+  @objc(addEvents:) @NSManaged dynamic public func addToEvents(_ values: Foundation.NSSet)
+  @objc(removeEvents:) @NSManaged dynamic public func removeFromEvents(_ values: Foundation.NSSet)
 }
