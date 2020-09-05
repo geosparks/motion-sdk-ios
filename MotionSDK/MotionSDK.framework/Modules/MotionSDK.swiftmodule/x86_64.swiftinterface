@@ -95,6 +95,8 @@ import UserNotifications
   @objc public static func resumeTrip(_ tripId: Swift.String, handler: MotionSDK.MotionTripCompletionhandler)
   @objc public static func forceEndTrip(_ tripId: Swift.String, handler: MotionSDK.MotionTripCompletionhandler)
   @objc public static func activeTrips(_ local: Swift.Bool, handler: MotionSDK.MotionActiveTripsCompletionhandler)
+  @objc public static func deleteTrip(_ tripId: Swift.String, handler: MotionSDK.MotionTripCompletionhandler)
+  @objc public static func syncTrip(_ tripId: Swift.String, handler: MotionSDK.MotionTripCompletionhandler)
   @objc public static func createTrip(_ local: Swift.Bool, _ coordinate: Swift.Dictionary<Swift.String, Any>? = nil, handler: MotionSDK.MotionCreateTripCompletionhandler)
   @objc public static func getTripDetails(_ tripId: Swift.String, handler: MotionSDK.MotionGetTripCompletionhandler)
   @objc public static func getTripSummary(_ tripId: Swift.String, handler: MotionSDK.MotionSummaryTripCompletionhandler)
@@ -307,6 +309,7 @@ extension Reachability {
   case End
   case ForceEnd
   case Delete
+  case Sync
   public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
   public var rawValue: Swift.Int {
@@ -744,6 +747,10 @@ extension TripsLocal {
     @objc set(value)
   }
   @objc @NSManaged dynamic public var location_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var synced: Swift.Bool {
     @objc get
     @objc set(value)
   }
