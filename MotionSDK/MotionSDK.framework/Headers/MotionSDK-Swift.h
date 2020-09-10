@@ -398,6 +398,7 @@ SWIFT_CLASS("_TtC9MotionSDK10MotionTrip")
 @property (nonatomic) BOOL paused;
 @property (nonatomic, copy) NSString * _Null_unspecified updatedAt;
 @property (nonatomic, copy) NSString * _Null_unspecified createdAt;
+@property (nonatomic, copy) NSString * _Null_unspecified syncStatus;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -657,6 +658,7 @@ SWIFT_CLASS_NAMED("TripsLocal")
 @property (nonatomic) BOOL is_paused;
 @property (nonatomic) BOOL is_started;
 @property (nonatomic, copy) NSString * _Nullable location_id;
+@property (nonatomic, copy) NSString * _Nullable sync_status;
 @property (nonatomic) BOOL synced;
 @property (nonatomic, copy) NSString * _Nullable trip_ended_at;
 @property (nonatomic, copy) NSString * _Nullable trip_id;

@@ -22,6 +22,7 @@ import UserNotifications
   @objc public var paused: Swift.Bool
   @objc public var updatedAt: Swift.String!
   @objc public var createdAt: Swift.String!
+  @objc public var syncStatus: Swift.String!
   @objc deinit
   @objc override dynamic public init()
 }
@@ -747,6 +748,10 @@ extension TripsLocal {
     @objc set(value)
   }
   @objc @NSManaged dynamic public var location_id: Swift.String? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var sync_status: Swift.String? {
     @objc get
     @objc set(value)
   }
