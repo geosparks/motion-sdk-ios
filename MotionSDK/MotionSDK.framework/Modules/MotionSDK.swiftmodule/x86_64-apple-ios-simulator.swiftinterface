@@ -85,7 +85,6 @@ import UserNotifications
   @objc public static func requestLocation()
   @objc public static func requestMotion()
   @objc public static func isLocationEnabled() -> Swift.Bool
-  @objc public static func isMotionEnabled() -> Swift.Bool
   @objc public static func isLocationTracking() -> Swift.Bool
   @objc public static func locationPermissionStatus() -> Swift.Int
   @objc public static func getCurrentLocation(_ accuracy: Swift.Int, handler: MotionSDK.MotionCurrentLocationCompletionhandler)
