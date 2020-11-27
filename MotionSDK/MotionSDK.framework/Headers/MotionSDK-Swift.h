@@ -322,13 +322,15 @@ SWIFT_CLASS("_TtC9MotionSDK16MotionCreateTrip")
 @end
 
 @class MotionLocation;
+@class MotionEvents;
+@class MotionLocationReceived;
 @class TripStatusListener;
 
 SWIFT_PROTOCOL("_TtP9MotionSDK14MotionDelegate_")
 @protocol MotionDelegate
 - (void)didUpdateLocation:(MotionLocation * _Nonnull)location;
-- (void)didReceiveEvents:(NSDictionary<NSString *, id> * _Nonnull)dictionary;
-- (void)didReceiveUserLocation:(NSDictionary<NSString *, id> * _Nonnull)dictionary;
+- (void)didReceiveEvents:(MotionEvents * _Nonnull)events;
+- (void)didReceiveUserLocation:(MotionLocationReceived * _Nonnull)location;
 - (void)didReceiveTripStatus:(TripStatusListener * _Nonnull)tripStatus;
 - (void)onError:(MotionError * _Nonnull)error;
 @end
@@ -343,6 +345,31 @@ SWIFT_CLASS("_TtC9MotionSDK11MotionError")
 @end
 
 @class NSNumber;
+
+SWIFT_CLASS("_TtC9MotionSDK12MotionEvents")
+@interface MotionEvents : NSObject
+@property (nonatomic, copy) NSString * _Nullable activity;
+@property (nonatomic, strong) NSNumber * _Nonnull altitude;
+@property (nonatomic, strong) NSNumber * _Nonnull course;
+@property (nonatomic, copy) NSString * _Nullable createdAt;
+@property (nonatomic, strong) NSNumber * _Nonnull distance;
+@property (nonatomic, copy) NSString * _Nullable eventSource;
+@property (nonatomic, copy) NSString * _Nullable eventType;
+@property (nonatomic, copy) NSString * _Nullable eventVersion;
+@property (nonatomic, copy) NSString * _Nullable geofenceId;
+@property (nonatomic, strong) NSNumber * _Nonnull horizontalAccuracy;
+@property (nonatomic, copy) NSArray<NSNumber *> * _Nullable coordinates;
+@property (nonatomic, copy) NSString * _Nullable locationId;
+@property (nonatomic, copy) NSString * _Nullable nearbyUserId;
+@property (nonatomic, copy) NSString * _Nullable recordedAt;
+@property (nonatomic, strong) NSNumber * _Nonnull speed;
+@property (nonatomic, copy) NSString * _Nullable tripId;
+@property (nonatomic, copy) NSString * _Nullable userId;
+@property (nonatomic, strong) NSNumber * _Nonnull veritcalAccuracy;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 @class MotionTripEvent;
 
 SWIFT_CLASS("_TtC9MotionSDK13MotionGetTrip")
@@ -373,6 +400,27 @@ SWIFT_CLASS("_TtC9MotionSDK14MotionLocation")
 @property (nonatomic, readonly, copy) NSString * _Nullable userId;
 @property (nonatomic, readonly, copy) NSString * _Nullable activity;
 @property (nonatomic, readonly, strong) CLLocation * _Nonnull location;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC9MotionSDK22MotionLocationReceived")
+@interface MotionLocationReceived : NSObject
+@property (nonatomic, copy) NSString * _Null_unspecified activity;
+@property (nonatomic, strong) NSNumber * _Null_unspecified altitude;
+@property (nonatomic, strong) NSNumber * _Null_unspecified latitude;
+@property (nonatomic, strong) NSNumber * _Null_unspecified longitude;
+@property (nonatomic, strong) NSNumber * _Null_unspecified course;
+@property (nonatomic, copy) NSString * _Null_unspecified eventSource;
+@property (nonatomic, copy) NSString * _Null_unspecified eventType;
+@property (nonatomic, copy) NSString * _Null_unspecified eventVersion;
+@property (nonatomic, strong) NSNumber * _Null_unspecified horizontalAccuracy;
+@property (nonatomic, copy) NSString * _Null_unspecified locationId;
+@property (nonatomic, copy) NSString * _Null_unspecified recordedAt;
+@property (nonatomic, strong) NSNumber * _Null_unspecified speed;
+@property (nonatomic, copy) NSString * _Null_unspecified userId;
+@property (nonatomic, strong) NSNumber * _Null_unspecified verticalAccuracy;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1000,13 +1048,15 @@ SWIFT_CLASS("_TtC9MotionSDK16MotionCreateTrip")
 @end
 
 @class MotionLocation;
+@class MotionEvents;
+@class MotionLocationReceived;
 @class TripStatusListener;
 
 SWIFT_PROTOCOL("_TtP9MotionSDK14MotionDelegate_")
 @protocol MotionDelegate
 - (void)didUpdateLocation:(MotionLocation * _Nonnull)location;
-- (void)didReceiveEvents:(NSDictionary<NSString *, id> * _Nonnull)dictionary;
-- (void)didReceiveUserLocation:(NSDictionary<NSString *, id> * _Nonnull)dictionary;
+- (void)didReceiveEvents:(MotionEvents * _Nonnull)events;
+- (void)didReceiveUserLocation:(MotionLocationReceived * _Nonnull)location;
 - (void)didReceiveTripStatus:(TripStatusListener * _Nonnull)tripStatus;
 - (void)onError:(MotionError * _Nonnull)error;
 @end
@@ -1021,6 +1071,31 @@ SWIFT_CLASS("_TtC9MotionSDK11MotionError")
 @end
 
 @class NSNumber;
+
+SWIFT_CLASS("_TtC9MotionSDK12MotionEvents")
+@interface MotionEvents : NSObject
+@property (nonatomic, copy) NSString * _Nullable activity;
+@property (nonatomic, strong) NSNumber * _Nonnull altitude;
+@property (nonatomic, strong) NSNumber * _Nonnull course;
+@property (nonatomic, copy) NSString * _Nullable createdAt;
+@property (nonatomic, strong) NSNumber * _Nonnull distance;
+@property (nonatomic, copy) NSString * _Nullable eventSource;
+@property (nonatomic, copy) NSString * _Nullable eventType;
+@property (nonatomic, copy) NSString * _Nullable eventVersion;
+@property (nonatomic, copy) NSString * _Nullable geofenceId;
+@property (nonatomic, strong) NSNumber * _Nonnull horizontalAccuracy;
+@property (nonatomic, copy) NSArray<NSNumber *> * _Nullable coordinates;
+@property (nonatomic, copy) NSString * _Nullable locationId;
+@property (nonatomic, copy) NSString * _Nullable nearbyUserId;
+@property (nonatomic, copy) NSString * _Nullable recordedAt;
+@property (nonatomic, strong) NSNumber * _Nonnull speed;
+@property (nonatomic, copy) NSString * _Nullable tripId;
+@property (nonatomic, copy) NSString * _Nullable userId;
+@property (nonatomic, strong) NSNumber * _Nonnull veritcalAccuracy;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 @class MotionTripEvent;
 
 SWIFT_CLASS("_TtC9MotionSDK13MotionGetTrip")
@@ -1051,6 +1126,27 @@ SWIFT_CLASS("_TtC9MotionSDK14MotionLocation")
 @property (nonatomic, readonly, copy) NSString * _Nullable userId;
 @property (nonatomic, readonly, copy) NSString * _Nullable activity;
 @property (nonatomic, readonly, strong) CLLocation * _Nonnull location;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC9MotionSDK22MotionLocationReceived")
+@interface MotionLocationReceived : NSObject
+@property (nonatomic, copy) NSString * _Null_unspecified activity;
+@property (nonatomic, strong) NSNumber * _Null_unspecified altitude;
+@property (nonatomic, strong) NSNumber * _Null_unspecified latitude;
+@property (nonatomic, strong) NSNumber * _Null_unspecified longitude;
+@property (nonatomic, strong) NSNumber * _Null_unspecified course;
+@property (nonatomic, copy) NSString * _Null_unspecified eventSource;
+@property (nonatomic, copy) NSString * _Null_unspecified eventType;
+@property (nonatomic, copy) NSString * _Null_unspecified eventVersion;
+@property (nonatomic, strong) NSNumber * _Null_unspecified horizontalAccuracy;
+@property (nonatomic, copy) NSString * _Null_unspecified locationId;
+@property (nonatomic, copy) NSString * _Null_unspecified recordedAt;
+@property (nonatomic, strong) NSNumber * _Null_unspecified speed;
+@property (nonatomic, copy) NSString * _Null_unspecified userId;
+@property (nonatomic, strong) NSNumber * _Null_unspecified verticalAccuracy;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end

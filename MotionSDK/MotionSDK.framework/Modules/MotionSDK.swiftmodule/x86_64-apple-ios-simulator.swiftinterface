@@ -65,8 +65,8 @@ import UserNotifications
 }
 @objc public protocol MotionDelegate {
   @objc func didUpdateLocation(_ location: MotionSDK.MotionLocation)
-  @objc func didReceiveEvents(_ dictionary: Swift.Dictionary<Swift.String, Any>)
-  @objc func didReceiveUserLocation(_ dictionary: Swift.Dictionary<Swift.String, Any>)
+  @objc func didReceiveEvents(_ events: MotionSDK.MotionEvents)
+  @objc func didReceiveUserLocation(_ location: MotionSDK.MotionLocationReceived)
   @objc func didReceiveTripStatus(_ tripStatus: MotionSDK.TripStatusListener)
   @objc func onError(_ error: MotionSDK.MotionError)
 }
@@ -164,6 +164,46 @@ public enum LocationAccuracy {
   public var useStandardLocationServices: Swift.Bool?
   @objc override dynamic public init()
   @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class MotionEvents : ObjectiveC.NSObject {
+  @objc public var activity: Swift.String?
+  @objc public var altitude: Foundation.NSNumber
+  @objc public var course: Foundation.NSNumber
+  @objc public var createdAt: Swift.String?
+  @objc public var distance: Foundation.NSNumber
+  @objc public var eventSource: Swift.String?
+  @objc public var eventType: Swift.String?
+  @objc public var eventVersion: Swift.String?
+  @objc public var geofenceId: Swift.String?
+  @objc public var horizontalAccuracy: Foundation.NSNumber
+  @objc public var coordinates: [Swift.Double]?
+  @objc public var locationId: Swift.String?
+  @objc public var nearbyUserId: Swift.String?
+  @objc public var recordedAt: Swift.String?
+  @objc public var speed: Foundation.NSNumber
+  @objc public var tripId: Swift.String?
+  @objc public var userId: Swift.String?
+  @objc public var veritcalAccuracy: Foundation.NSNumber
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objc public class MotionLocationReceived : ObjectiveC.NSObject {
+  @objc public var activity: Swift.String!
+  @objc public var altitude: Foundation.NSNumber!
+  @objc public var latitude: Foundation.NSNumber!
+  @objc public var longitude: Foundation.NSNumber!
+  @objc public var course: Foundation.NSNumber!
+  @objc public var eventSource: Swift.String!
+  @objc public var eventType: Swift.String!
+  @objc public var eventVersion: Swift.String!
+  @objc public var horizontalAccuracy: Foundation.NSNumber!
+  @objc public var locationId: Swift.String!
+  @objc public var recordedAt: Swift.String!
+  @objc public var speed: Foundation.NSNumber!
+  @objc public var userId: Swift.String!
+  @objc public var verticalAccuracy: Foundation.NSNumber!
+  @objc deinit
+  @objc override dynamic public init()
 }
 @_hasMissingDesignatedInitializers @objc public class MotionTripSummary : ObjectiveC.NSObject {
   @objc public var distanceCovered: Foundation.NSNumber
