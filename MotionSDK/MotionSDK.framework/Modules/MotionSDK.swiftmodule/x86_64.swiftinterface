@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
-// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name MotionSDK
+// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MotionSDK
 import AWSCore
 import AWSIoT
 import AWSMobileClient
@@ -73,7 +73,7 @@ import UserNotifications
 @_inheritsConvenienceInitializers @objc public class Motion : ObjectiveC.NSObject {
   @objc public static var delegate: MotionSDK.MotionDelegate! {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc public static func intialize(_ publishKey: Swift.String, _ baseUrl: Swift.String? = nil, _ p12FilePath: Swift.String? = nil, _ iOTEndPoint: Swift.String? = nil, _ passPhrase: Swift.String? = nil, _ region: AWSCore.AWSRegionType = .Unknown)
   @objc public static func createUser(_ description: Swift.String, handler: MotionSDK.MotionUserCompletionhandler? = nil)
@@ -126,8 +126,8 @@ import UserNotifications
   @objc public var reached: Swift.Bool
   @objc public var tripId: Swift.String!
   @objc public var updatedAt: Swift.String!
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class MotionError : ObjectiveC.NSObject {
   @objc final public let code: Swift.String?
@@ -149,7 +149,7 @@ public enum LocationAccuracy {
   public func hash(into hasher: inout Swift.Hasher)
 }
 @objc @_inheritsConvenienceInitializers public class MotionTrackingCustomMethods : ObjectiveC.NSObject {
-  public static var sharedInstance: MotionSDK.MotionTrackingCustomMethods
+  public static let sharedInstance: MotionSDK.MotionTrackingCustomMethods
   public var desiredAccuracy: MotionSDK.LocationAccuracy?
   public var useVisits: Swift.Bool?
   public var showsBackgroundLocationIndicator: Swift.Bool?
@@ -202,8 +202,8 @@ public enum LocationAccuracy {
   @objc public var speed: Foundation.NSNumber!
   @objc public var userId: Swift.String!
   @objc public var verticalAccuracy: Foundation.NSNumber!
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class MotionTripSummary : ObjectiveC.NSObject {
   @objc public var distanceCovered: Foundation.NSNumber
@@ -213,8 +213,8 @@ public enum LocationAccuracy {
   @objc public var tripId: Swift.String!
   @objc public var tripStatus: Swift.String!
   @objc public var userId: Swift.String!
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class MotionTripOrigin : ObjectiveC.NSObject {
   @objc public var coordinates: [Swift.Double]!
@@ -224,15 +224,15 @@ public enum LocationAccuracy {
   @objc public var reached: Swift.Bool
   @objc public var tripId: Swift.String!
   @objc public var updatedAt: Swift.String!
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class MotionLocation : ObjectiveC.NSObject {
   @objc final public let userId: Swift.String?
   @objc final public let activity: Swift.String?
   @objc final public let location: CoreLocation.CLLocation
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class TripStatusListener : ObjectiveC.NSObject {
   @objc final public let tripId: Swift.String
@@ -254,18 +254,16 @@ public enum ReachabilityError : Swift.Error {
   case unableToGetFlags(Swift.Int32)
 }
 @available(*, unavailable, renamed: "Notification.Name.reachabilityChanged")
-public var ReachabilityChangedNotification: Foundation.NSNotification.Name
+public let ReachabilityChangedNotification: Foundation.NSNotification.Name
 extension NSNotification.Name {
-  public static var reachabilityChanged: Foundation.Notification.Name
+  public static let reachabilityChanged: Foundation.Notification.Name
 }
 public class Reachability {
   public typealias NetworkReachable = (MotionSDK.Reachability) -> ()
   public typealias NetworkUnreachable = (MotionSDK.Reachability) -> ()
   @available(*, unavailable, renamed: "Connection")
   public enum NetworkStatus : Swift.CustomStringConvertible {
-    case notReachable
-    case reachableViaWiFi
-    case reachableViaWWAN
+    case notReachable, reachableViaWiFi, reachableViaWWAN
     public var description: Swift.String {
       get
     }
@@ -278,9 +276,7 @@ public class Reachability {
   public enum Connection : Swift.CustomStringConvertible {
     @available(*, deprecated, renamed: "unavailable")
     case none
-    case unavailable
-    case wifi
-    case cellular
+    case unavailable, wifi, cellular
     public var description: Swift.String {
       get
     }
@@ -308,8 +304,8 @@ public class Reachability {
     get
   }
   required public init(reachabilityRef: SystemConfiguration.SCNetworkReachability, queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main)
-  public convenience init(hostname: Swift.String, queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main) throws
-  public convenience init(queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main) throws
+  convenience public init(hostname: Swift.String, queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main) throws
+  convenience public init(queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main) throws
   @objc deinit
 }
 extension Reachability {
@@ -337,10 +333,10 @@ extension Reachability {
   case active
   case custom
   public typealias RawValue = Swift.Int
-  public init?(rawValue: Swift.Int)
   public var rawValue: Swift.Int {
     get
   }
+  public init?(rawValue: Swift.Int)
 }
 @objc public enum Trip : Swift.Int {
   case Start
@@ -361,8 +357,8 @@ extension Reachability {
   @objc public var altitude: Foundation.NSNumber!
   @objc public var coordinates: [Swift.Double]!
   @objc public var recordedAt: Swift.String!
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class MotionGetTrip : ObjectiveC.NSObject {
   @objc public var createdAt: Swift.String!
@@ -381,8 +377,8 @@ extension Reachability {
   @objc public var tripStartedAt: Swift.String!
   @objc public var updatedAt: Swift.String!
   @objc public var userId: Swift.String!
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc public class MotionTripListener : ObjectiveC.NSObject {
   @objc final public let tripId: Swift.String
@@ -411,79 +407,79 @@ extension HttpLocationData {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.HttpLocationData>
   @objc @NSManaged dynamic public var accuracy: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var activity: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var altitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var app_stat: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var bat_saver_mode: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var bat_stat: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var battery_remaining: Swift.Int16 {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var ended_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var gps_stat: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var latitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var location_permission: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var longitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var motion_stat: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var net_stat: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var recorded_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var speed: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var started_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var timezone_offset: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var user_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
 @_inheritsConvenienceInitializers @objc(MqttLocationData) public class MqttLocationData : CoreData.NSManagedObject {
@@ -494,123 +490,123 @@ extension MqttLocationData {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.MqttLocationData>
   @objc @NSManaged dynamic public var activity: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var altitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var app_context: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var app_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var battery_remaining: Swift.Int16 {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var battery_saver: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var battery_status: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var course: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var device_manufacturer: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var device_model: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var event_listener: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var geofence_events: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var gps_status: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var horizontal_accuracy: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var latitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var location_events: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var location_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var location_listener: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var location_permission: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var longitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var nearby_events: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var network_status: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var os_version: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var recorded_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var speed: Swift.Int16 {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var tracking_mode: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var trips_events: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var tz_offset: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var user_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var vertical_accuracy: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
 @_inheritsConvenienceInitializers @objc(MyTrip) public class MyTrip : CoreData.NSManagedObject {
@@ -621,47 +617,47 @@ extension MyTrip {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.MyTrip>
   @objc @NSManaged dynamic public var distance: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var duration: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var latitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var locationId: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var longitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var speed: Swift.Int16 {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var start_time: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var status: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var tripId: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var update_time: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var route: Foundation.NSSet? {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
 extension MyTrip {
@@ -678,35 +674,35 @@ extension MyTripRoute {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.MyTripRoute>
   @objc @NSManaged dynamic public var activity: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var altitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var entityId: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var latitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var longitude: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var recorded_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var tripId: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var trip: MotionSDK.MyTrip? {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
 @_inheritsConvenienceInitializers @objc(TripEventsLocal) public class TripEventsLocal : CoreData.NSManagedObject {
@@ -717,39 +713,39 @@ extension TripEventsLocal {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.TripEventsLocal>
   @objc @NSManaged dynamic public var created_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var entityId: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var event_source: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var event_type: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var event_version: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var location_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var trip_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var user_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var trip: MotionSDK.TripsLocal? {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
 @_inheritsConvenienceInitializers @objc(TripsLocal) public class TripsLocal : CoreData.NSManagedObject {
@@ -760,67 +756,67 @@ extension TripsLocal {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.TripsLocal>
   @objc @NSManaged dynamic public var created_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var distance_covered: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var duration: Swift.Double {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var is_deleted: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var is_ended: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var is_paused: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var is_started: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var location_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var sync_status: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var synced: Swift.Bool {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var trip_ended_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var trip_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var trip_started_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var updated_at: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var user_id: Swift.String? {
     @objc get
-    @objc set(value)
+    @objc set
   }
   @objc @NSManaged dynamic public var events: Foundation.NSSet? {
     @objc get
-    @objc set(value)
+    @objc set
   }
 }
 extension TripsLocal {
@@ -829,3 +825,17 @@ extension TripsLocal {
   @objc(addEvents:) @NSManaged dynamic public func addToEvents(_ values: Foundation.NSSet)
   @objc(removeEvents:) @NSManaged dynamic public func removeFromEvents(_ values: Foundation.NSSet)
 }
+extension MotionSDK.LocationAccuracy : Swift.Equatable {}
+extension MotionSDK.LocationAccuracy : Swift.Hashable {}
+@available(*, unavailable, renamed: "Connection")
+extension MotionSDK.Reachability.NetworkStatus : Swift.Equatable {}
+@available(*, unavailable, renamed: "Connection")
+extension MotionSDK.Reachability.NetworkStatus : Swift.Hashable {}
+extension MotionSDK.Reachability.Connection : Swift.Equatable {}
+extension MotionSDK.Reachability.Connection : Swift.Hashable {}
+extension MotionSDK.MotionTrackingMode : Swift.Equatable {}
+extension MotionSDK.MotionTrackingMode : Swift.Hashable {}
+extension MotionSDK.MotionTrackingMode : Swift.RawRepresentable {}
+extension MotionSDK.Trip : Swift.Equatable {}
+extension MotionSDK.Trip : Swift.Hashable {}
+extension MotionSDK.Trip : Swift.RawRepresentable {}
