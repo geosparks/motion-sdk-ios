@@ -299,6 +299,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MotionDelegate> _N
 + (void)unsubscribeUserLocation:(NSString * _Nonnull)userId;
 + (void)subscribeTripStatus:(NSString * _Nonnull)tripId;
 + (void)unsubscribeTripStatus:(NSString * _Nonnull)tripId;
++ (void)enableAccuracyFilter;
++ (void)disableAccuracyFilter;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1025,6 +1027,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MotionDelegate> _N
 + (void)unsubscribeUserLocation:(NSString * _Nonnull)userId;
 + (void)subscribeTripStatus:(NSString * _Nonnull)tripId;
 + (void)unsubscribeTripStatus:(NSString * _Nonnull)tripId;
++ (void)enableAccuracyFilter;
++ (void)disableAccuracyFilter;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 

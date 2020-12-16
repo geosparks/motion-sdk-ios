@@ -115,6 +115,8 @@ import UserNotifications
   @objc public static func unsubscribeUserLocation(_ userId: Swift.String)
   @objc public static func subscribeTripStatus(_ tripId: Swift.String)
   @objc public static func unsubscribeTripStatus(_ tripId: Swift.String)
+  @objc public static func enableAccuracyFilter()
+  @objc public static func disableAccuracyFilter()
   @objc deinit
   @objc override dynamic public init()
 }
@@ -162,6 +164,7 @@ public enum LocationAccuracy {
   public var activityType: CoreLocation.CLActivityType?
   public var pausesLocationUpdatesAutomatically: Swift.Bool?
   public var useStandardLocationServices: Swift.Bool?
+  public var accuracyFilter: Swift.Int?
   @objc override dynamic public init()
   @objc deinit
 }
