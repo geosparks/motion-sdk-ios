@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
 // swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name MotionSDK
 import AWSCore
 import AWSIoT
@@ -101,6 +101,7 @@ import UserNotifications
   @objc public static func getTripDetails(_ tripId: Swift.String, handler: MotionSDK.MotionGetTripCompletionhandler? = nil)
   @objc public static func getTripSummary(_ tripId: Swift.String, handler: MotionSDK.MotionSummaryTripCompletionhandler? = nil)
   @objc public static func getTripStatus(_ tripId: Swift.String, handler: MotionSDK.MotionTripListenerCompletionhandler? = nil)
+  @objc public static func istripSynced(_ tripId: Swift.String) -> Swift.Bool
   @objc public static func toggleEvents(Geofence: Swift.Bool, Trip: Swift.Bool, Location: Swift.Bool, MovingGeofence: Swift.Bool, handler: MotionSDK.MotionUserCompletionhandler? = nil)
   @objc public static func toggleListener(Events: Swift.Bool, Locations: Swift.Bool, handler: MotionSDK.MotionUserCompletionhandler? = nil)
   @objc public static func getEventsStatus(handler: MotionSDK.MotionUserCompletionhandler? = nil)
