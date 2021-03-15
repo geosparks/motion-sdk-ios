@@ -13,5 +13,9 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = '10.0'
   spec.dependency 'AWSIoT'
   spec.dependency 'AWSMobileClient'
+  spec.pod_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+  }
+  spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   spec.license               = { :type => 'Copyright', :text => 'Copyright (c) 2020 Motion. All rights reserved.' }
 end
