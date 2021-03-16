@@ -166,6 +166,7 @@ public enum LocationAccuracy {
   public var pausesLocationUpdatesAutomatically: Swift.Bool?
   public var useStandardLocationServices: Swift.Bool?
   public var accuracyFilter: Swift.Int?
+  public var updateInterval: Swift.Int?
   @objc override dynamic public init()
   @objc deinit
 }
