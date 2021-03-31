@@ -118,6 +118,7 @@ import UserNotifications
   @objc public static func unsubscribeTripStatus(_ tripId: Swift.String)
   @objc public static func enableAccuracyEngine()
   @objc public static func disableAccuracyEngine()
+  @objc public static func enableAccuracyEngine(_ accuracy: Swift.Int)
   @objc deinit
   @objc override dynamic public init()
 }

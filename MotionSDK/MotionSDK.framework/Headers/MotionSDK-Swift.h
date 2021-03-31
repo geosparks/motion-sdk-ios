@@ -302,6 +302,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MotionDelegate> _N
 + (void)unsubscribeTripStatus:(NSString * _Nonnull)tripId;
 + (void)enableAccuracyEngine;
 + (void)disableAccuracyEngine;
++ (void)enableAccuracyEngine:(NSInteger)accuracy;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
