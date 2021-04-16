@@ -4,6 +4,7 @@
 import AWSCore
 import AWSIoT
 import AWSMobileClient
+import CommonCrypto
 import CoreData
 import CoreLocation
 import CoreMotion
@@ -75,7 +76,7 @@ import UserNotifications
     @objc get
     @objc set(value)
   }
-  @objc public static func initialize(_ publishKey: Swift.String, _ baseUrl: Swift.String? = nil, _ p12FilePath: Swift.String? = nil, _ iOTEndPoint: Swift.String? = nil, _ passPhrase: Swift.String? = nil, _ region: AWSCore.AWSRegionType = .Unknown)
+  @objc public static func initialize(_ publishKey: Swift.String, _ baseUrl: Swift.String? = nil, _ iOTEndPoint: Swift.String? = nil, _ region: AWSCore.AWSRegionType = .Unknown)
   @objc public static func createUser(_ description: Swift.String, handler: MotionSDK.MotionUserCompletionhandler? = nil)
   @objc public static func getUser(_ userId: Swift.String, handler: MotionSDK.MotionUserCompletionhandler? = nil)
   @objc public static func setDescription(_ description: Swift.String)
