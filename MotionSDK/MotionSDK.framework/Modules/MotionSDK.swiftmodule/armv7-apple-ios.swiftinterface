@@ -689,6 +689,10 @@ extension MyTrip {
 }
 extension MyTripRoute {
   @nonobjc public class func fetchRequest() -> CoreData.NSFetchRequest<MotionSDK.MyTripRoute>
+  @objc @NSManaged dynamic public var accuracy: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
   @objc @NSManaged dynamic public var activity: Swift.String? {
     @objc get
     @objc set(value)
@@ -702,6 +706,10 @@ extension MyTripRoute {
     @objc set(value)
   }
   @objc @NSManaged dynamic public var latitude: Swift.Double {
+    @objc get
+    @objc set(value)
+  }
+  @objc @NSManaged dynamic public var location_id: Swift.String? {
     @objc get
     @objc set(value)
   }

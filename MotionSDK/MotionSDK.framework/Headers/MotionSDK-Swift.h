@@ -635,10 +635,12 @@ SWIFT_CLASS_NAMED("MyTripRoute")
 
 
 @interface MyTripRoute (SWIFT_EXTENSION(MotionSDK))
+@property (nonatomic) double accuracy;
 @property (nonatomic, copy) NSString * _Nullable activity;
 @property (nonatomic) double altitude;
 @property (nonatomic, copy) NSString * _Nullable entityId;
 @property (nonatomic) double latitude;
+@property (nonatomic, copy) NSString * _Nullable location_id;
 @property (nonatomic) double longitude;
 @property (nonatomic, copy) NSString * _Nullable recorded_at;
 @property (nonatomic, copy) NSString * _Nullable tripId;
@@ -1368,10 +1370,12 @@ SWIFT_CLASS_NAMED("MyTripRoute")
 
 
 @interface MyTripRoute (SWIFT_EXTENSION(MotionSDK))
+@property (nonatomic) double accuracy;
 @property (nonatomic, copy) NSString * _Nullable activity;
 @property (nonatomic) double altitude;
 @property (nonatomic, copy) NSString * _Nullable entityId;
 @property (nonatomic) double latitude;
+@property (nonatomic, copy) NSString * _Nullable location_id;
 @property (nonatomic) double longitude;
 @property (nonatomic, copy) NSString * _Nullable recorded_at;
 @property (nonatomic, copy) NSString * _Nullable tripId;
